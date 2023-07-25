@@ -12,7 +12,7 @@ import { fileURLToPath } from "url"
 // CONFIGURATIONS
 const __filename=fileURLToPath(import.meta.url)
 const __dirname =path.dirname(__filename)
-dotenv.config
+dotenv.config()
 
 const app=express()
 app.use(express.json())
@@ -34,3 +34,17 @@ const storage=multer .diskStorage(
         cb(null,file.originalname)
         }
     })
+
+const upload = multer({storage})
+
+// MONGOOSE SETUP
+const PORT = process.env.PORT || 6001
+mongoose.connect(process.env.MONGO_URL,{
+    useNewUrlParser : true ,
+    useUnifiedTopology: true,
+}).then(
+    app.listen(
+        PORT,()=>console.log(`Server Port ${PORT}`)
+    )
+).catch
+((err)=> console.log(`${err} did not connect`));
